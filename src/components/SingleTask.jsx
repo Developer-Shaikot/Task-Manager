@@ -35,8 +35,23 @@ export default function SingleTask({ data, provided, snapshot }) {
                     : "bg-white border border-gray-200"
             } rounded-lg shadow p-3 select-none transition-colors my-1.5 first-of-type:mt-0 last-of-type:mb-0 w-96`}
         >
-            <div className="text-slate-700 text-sm font-inter font-semibold leading-[18px]">
-                {data.heading}
+            <div className="flex justify-between">
+                <div className="text-slate-700 text-sm font-inter font-semibold leading-[18px] flex justify-between">
+                    <img
+                        className="w-6 h-6 mr-2 rounded-full border border-white"
+                        src="https://mui.com/static/images/avatar/5.jpg"
+                        alt="attachments"
+                    />
+                    {data.heading}
+                </div>
+                <div className="text-slate-700 text-sm font-inter font-semibold leading-[18px] flex justify-between">
+                    <img
+                        className="w-6 h-6 mr-2 rounded-full border border-white"
+                        src="https://mui.com/static/images/avatar/2.jpg"
+                        alt="attachments"
+                    />
+                    {data.subheading}
+                </div>
             </div>
             <div className="text-slate-700 py-3 text-xs font-inter font-normal leading">
                 {data.description}
