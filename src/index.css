@@ -1,13 +1,54 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-scrollbar::-webkit-scrollbar {
+    height: 14px; /* Adjust the height of the horizontal scrollbar */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+    border-radius: 7px; /* Rounds the track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3b79ff; /* Color of the scrollbar thumb */
+    border-radius: 7px; /* Rounds the scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3b79ff; /* Color of the scrollbar thumb on hover */
+    border-radius: 7px; /* Ensures it stays rounded on hover */
+}
+
+/* Hover effect for the scrollbar */
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #3b79ff; /* Color of the scrollbar thumb on hover */
+    border-radius: 7px; /* Keeps the thumb rounded */
+}
+
+.custom-Y-scrollbar::-webkit-scrollbar {
+    width: 5px; /* Adjust the height of the horizontal scrollbar */
+}
+
+.custom-Y-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+    border-radius: 7px; /* Rounds the track */
+    margin: 50px;
+}
+
+.custom-Y-scrollbar::-webkit-scrollbar-thumb {
+    background: #3b79ff; /* Color of the scrollbar thumb */
+    border-radius: 7px; /* Rounds the scrollbar thumb */
+}
+
+.custom-Y-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3b79ff; /* Color of the scrollbar thumb on hover */
+    border-radius: 7px; /* Ensures it stays rounded on hover */
+}
+
+/* Hover effect for the scrollbar */
+.custom-Y-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #3b79ff; /* Color of the scrollbar thumb on hover */
+    border-radius: 7px; /* Keeps the thumb rounded */
 }
