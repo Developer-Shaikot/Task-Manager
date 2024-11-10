@@ -1,23 +1,49 @@
 import AssignedPeoples from "./AssignedPeoples";
 import PropTypes from "prop-types";
 import "react-calendar/dist/Calendar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SingleTask({ data, provided, snapshot }) {
     const [date] = useState(new Date());
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [attachments, setAttachments] = useState(
-        Array.isArray(data.attachment) ? data.attachment : []
-    );
+    const [attachments, setAttachments] = useState([]);
 
-    const handleFileUpload = (event) => {
+    useEffect(() => {
+        const fetchAttachments = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/attachments");
+                if (response.ok) {
+                    const result = await response.json();
+                    setAttachments(result);
+                } else {
+                    console.error("Failed to fetch attachments: Server responded with error");
+                }
+            } catch (error) {
+                console.error("Error fetching attachments:", error);
+            }
+        };
+        fetchAttachments();
+    }, []);
+
+    const handleFileUpload = async (event) => {
         const files = Array.from(event.target.files);
-        const newAttachments = files.map((file) => ({
-            name: file.name,
-            type: file.type,
-            file: file,
-        }));
-        setAttachments([...attachments, ...newAttachments]);
+        const formData = new FormData();
+        files.forEach((file) => formData.append("files", file));
+
+        try {
+            const response = await fetch("http://localhost:5000/upload", {
+                method: "POST",
+                body: formData,
+            });
+            if (response.ok) {
+                const result = await response.json();
+                setAttachments((prevAttachments) => [...prevAttachments, ...result.attachments]);
+            } else {
+                console.error("Failed to upload files: Server responded with error");
+            }
+        } catch (error) {
+            console.error("Error uploading files:", error);
+        }
     };
 
     const toggleModal = () => {
@@ -40,7 +66,7 @@ export default function SingleTask({ data, provided, snapshot }) {
                     <img
                         className="w-6 h-6 mr-2 rounded-full border border-white"
                         src="https://mui.com/static/images/avatar/5.jpg"
-                        alt="attachments"
+                        alt="avatar"
                     />
                     {data.heading}
                 </div>
@@ -48,7 +74,7 @@ export default function SingleTask({ data, provided, snapshot }) {
                     <img
                         className="w-6 h-6 mr-2 rounded-full border border-white"
                         src="https://mui.com/static/images/avatar/2.jpg"
-                        alt="attachments"
+                        alt="avatar"
                     />
                     {data.subheading}
                 </div>
@@ -61,13 +87,13 @@ export default function SingleTask({ data, provided, snapshot }) {
                 <AssignedPeoples people={data.assignedPeople} />
                 <div className="flex gap-2">
                     <div className="flex items-center gap-1 cursor-pointer">
-                        <img src="/assets/comment.png" alt="notification" className="w-6" />
+                        <img src="/assets/comment.png" alt="comment" className="w-6" />
                         <span className="text-slate-700 text-xs font-inter font-medium leading-none">
                             {data.comment}
                         </span>
                     </div>
                     <div className="flex items-center gap-1 cursor-pointer" onClick={toggleModal}>
-                        <img src="/assets/attachment.svg" alt="attachments" />
+                        <img src="/assets/attachment.svg" alt="attachment" />
                         <span className="text-slate-700 text-xs font-inter font-medium leading-none">
                             {attachments.length}
                         </span>
@@ -75,7 +101,7 @@ export default function SingleTask({ data, provided, snapshot }) {
                     <div className="flex items-center gap-1 cursor-pointer">
                         <span className="text-slate-700 text-xs font-inter font-medium leading-none flex items-center justify-between gap-2">
                             <img src="/assets/calendar.png" alt="calendar" className="w-6" />
-                            <span className="text-slate-700 text-xs font-inter font-medium leading-none">
+                            <span>
                                 {date.toLocaleDateString("en-US", {
                                     year: "numeric",
                                     month: "2-digit",
