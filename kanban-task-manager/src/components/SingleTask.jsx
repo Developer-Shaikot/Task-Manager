@@ -11,7 +11,7 @@ export default function SingleTask({ data, provided, snapshot }) {
     useEffect(() => {
         const fetchAttachments = async () => {
             try {
-                const response = await fetch("https://task-manager-oi52.onrender.com//attachments");
+                const response = await fetch("https://task-manager-oi52.onrender.com/attachments");
                 if (response.ok) {
                     const result = await response.json();
                     setAttachments(result);
